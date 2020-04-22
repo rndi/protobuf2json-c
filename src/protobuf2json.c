@@ -215,7 +215,7 @@ static int protobuf2json_process_message(
           "Error in json_object_set_new()"
         );
       }
-    } else if (field_descriptor->label == PROTOBUF_C_LABEL_OPTIONAL) {
+    } else if (field_descriptor->label == PROTOBUF_C_LABEL_OPTIONAL || field_descriptor->label == PROTOBUF_C_LABEL_NONE) {
       if (field_descriptor->flags & PROTOBUF_C_FIELD_FLAG_ONEOF) {
         if (*(uint32_t *)protobuf_value_quantifier == field_descriptor->id) {
           if (field_descriptor->type == PROTOBUF_C_TYPE_MESSAGE || field_descriptor->type == PROTOBUF_C_TYPE_STRING) {
@@ -754,11 +754,11 @@ static int json2protobuf_process_message(
 
         return result;
       }
-    } else if (field_descriptor->label == PROTOBUF_C_LABEL_OPTIONAL) {
+    } else if (field_descriptor->label == PROTOBUF_C_LABEL_OPTIONAL || field_descriptor->label == PROTOBUF_C_LABEL_NONE) {
       if (field_descriptor->type == PROTOBUF_C_TYPE_MESSAGE || field_descriptor->type == PROTOBUF_C_TYPE_STRING
         || (field_descriptor->flags & PROTOBUF_C_FIELD_FLAG_ONEOF)) {
         // Do nothing
-      } else {
+      } else if (field_descriptor->label != PROTOBUF_C_LABEL_NONE) {
         *(protobuf_c_boolean *)protobuf_value_quantifier = 1;
       }
 
