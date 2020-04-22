@@ -6,7 +6,7 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src test
+SUBDIRS = src
 
 cppcheck:
 	cppcheck --enable=style src/protobuf2json.c include/protobuf2json.h --error-exitcode=2
